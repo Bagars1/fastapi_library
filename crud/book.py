@@ -167,3 +167,18 @@ def patch_book(
 
     return existing_book
 
+
+def search_books(
+    db: Session,
+    title: str
+):
+    # Ищем книги, где title содержит введённый текст.
+    # Регистр не важен: "Harry", "harry" и "HARRY" будут найдены.
+    #
+    # % означает "любое количество любых символов".
+    # Поэтому %harry% означает:
+    # перед "harry" может быть любой текст
+    # и после "harry" тоже может быть любой текст.
+    return db.query(Book).filter(
+        Book.title.ilike(f"%{title}%")
+    ).all()
