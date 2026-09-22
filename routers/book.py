@@ -12,7 +12,8 @@ from crud.book import (
     get_book,
     update_book,
     delete_book,
-    patch_book
+    patch_book,
+    search_books
 )
 
 
@@ -29,6 +30,14 @@ def add_book(
     current_user = Depends(get_current_user)
 ):
     return create_book(db, book)
+
+@router.get("/search")
+def search_books_route(
+    title: str,
+    db: Session = Depends(get_db),
+    current_user = Depends(get_current_user)
+):
+    return search_books(db, title)
 
 
 @router.get("/")
