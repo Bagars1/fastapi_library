@@ -27,15 +27,16 @@ router = APIRouter(
 def add_book(
     book: BookCreate,
     db: Session = Depends(get_db),
-    current_user = Depends(get_current_user)
+    current_user=Depends(get_current_user)
 ):
     return create_book(db, book)
+
 
 @router.get("/search")
 def search_books_route(
     title: str,
     db: Session = Depends(get_db),
-    current_user = Depends(get_current_user)
+    current_user=Depends(get_current_user)
 ):
     return search_books(db, title)
 
@@ -47,7 +48,7 @@ def get_books(
     skip: int = Query(default=0),
     limit: int = Query(default=10),
     db: Session = Depends(get_db),
-    current_user = Depends(get_current_user)
+    current_user=Depends(get_current_user)
 ):
     return get_books_crud(db, sort_by, order, skip, limit)
 
@@ -57,7 +58,7 @@ def edit_book(
     book_id: int,
     book: BookUpdate,
     db: Session = Depends(get_db),
-    current_user = Depends(get_current_user)
+    current_user=Depends(get_current_user)
 ):
     return update_book(db, book_id, book)
 
@@ -66,7 +67,7 @@ def edit_book(
 def remove_book(
     book_id: int,
     db: Session = Depends(get_db),
-    current_user = Depends(get_current_user)
+    current_user=Depends(get_current_user)
 ):
     return delete_book(db, book_id)
 
@@ -76,6 +77,6 @@ def edit_book_partial(
     book_id: int,
     book: BookPatch,
     db: Session = Depends(get_db),
-    current_user = Depends(get_current_user)
+    current_user=Depends(get_current_user)
 ):
     return patch_book(db, book_id, book)
