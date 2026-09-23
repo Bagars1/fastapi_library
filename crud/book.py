@@ -182,3 +182,14 @@ def search_books(
     return db.query(Book).filter(
         Book.title.ilike(f"%{title}%")
     ).all()
+
+def delete_book(db: Session, book_id: int):
+    book = db.query(Book).filter(Book.id == book_id).first()
+
+    if not book:
+        return None
+
+    db.delete(book)
+    db.commit()
+
+    return book
