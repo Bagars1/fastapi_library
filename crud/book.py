@@ -170,18 +170,22 @@ def patch_book(
 
 def search_books(
     db: Session,
-    title: str
+    title: str | None = None,
+    author: str | None = None
 ):
-    # Ищем книги, где title содержит введённый текст.
-    # Регистр не важен: "Harry", "harry" и "HARRY" будут найдены.
-    #
-    # % означает "любое количество любых символов".
-    # Поэтому %harry% означает:
-    # перед "harry" может быть любой текст
-    # и после "harry" тоже может быть любой текст.
-    return db.query(Book).filter(
-        Book.title.ilike(f"%{title}%")
-    ).all()
+    query = db.query(Book)
+
+    if title:
+        query = query.filter(
+            Book.title.ilike(f"%{title}%")
+        )
+
+    if author:
+        query = query.filter(
+            Book.author.ilike(f"%{author}%")
+        )
+
+    return query.all()
 
 def delete_book(db: Session, book_id: int):
     book = db.query(Book).filter(Book.id == book_id).first()

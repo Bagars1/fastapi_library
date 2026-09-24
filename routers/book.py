@@ -34,11 +34,12 @@ def add_book(
 
 @router.get("/search")
 def search_books_route(
-    title: str,
+    title: str | None = None,
+    author: str | None = None,
     db: Session = Depends(get_db),
     current_user=Depends(get_current_user)
 ):
-    return search_books(db, title)
+    return search_books(db, title, author)
 
 
 @router.get("/")
