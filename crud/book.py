@@ -3,17 +3,17 @@ from fastapi import HTTPException
 
 from crud.category import get_category
 from models.book import Book
-from schemas.book import BookCreate, BookPatch, BookUpdate 
+from schemas.book import BookCreate, BookPatch, BookUpdate
 
 
 
 def create_book(db: Session, book: BookCreate):
-#бук криейт определяет, какие поля ползователь должен передать и какого они типа.
-#  она взята с папки схемс из вайла бук.пай 
+
+
     get_category(db, book.category_id)
 
-    new_book = Book(  # создаём новый объект в модели Book, которая находится в папке models,
-        # и заполняем его данными из СХЕМ КРИЕЙТ , которые пришли от пользователя через BookCreate.
+    new_book = Book(
+
         title=book.title,
         author=book.author,
         pages=book.pages,
@@ -64,27 +64,27 @@ def get_books(
 
 def get_book(
     db: Session,
-    book_id: int  # человек указывает ID книги, которую хочет получить
+    book_id: int
 ):
-    # db.query(Book) — программа обращается к Model Book,
-    # чтобы искать книгу в таблице books
-    #
-    # .filter(Book.id == book_id) — программа ищет книгу,
-    # у которой ID в базе данных совпадает с ID, который указал человек
-    #
-    # .first() — программа берёт первую найденную книгу
+
+
+
+
+
+
+
     book = db.query(Book).filter(Book.id == book_id).first()
 
-    # если книга с таким ID не найдена,
-    # программа сообщает человеку, что такой книги нет
+
+
     if book is None:
         raise HTTPException(
             status_code=404,
             detail="Book not found"
         )
 
-    # если книга найдена,
-    # программа возвращает её данные человеку
+
+
     return book
 
 

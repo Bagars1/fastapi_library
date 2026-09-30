@@ -28,14 +28,14 @@ router = APIRouter(
 
 @router.post("/", response_model=CategoryResponse)
 def add_category(
-    category: CategoryCreate,      # Данные, которые прислал пользователь.
-    db: Session = Depends(get_db)  # Подключение к базе данных.
+    category: CategoryCreate,
+    db: Session = Depends(get_db)
 ):
-    # Вызываем функцию create_category() из crud/category.py.
-    # Она:
-    # 1. создаёт объект Category;
-    # 2. сохраняет его в базе данных;
-    # 3. возвращает сохранённую категорию.
+
+
+
+
+
     return create_category(db, category)
 
 
@@ -44,42 +44,39 @@ def get_all_categories(
     db: Session = Depends(get_db)
 ):
     return get_categories(db)
- # Подключаемся к базе данных
-  # get_categories() — CRUD-функция.
-    # Она достаёт все категории из базы данных.
+
+
+
 
 
 @router.get("/{category_id}", response_model=CategoryResponse)
 def read_category(
-    category_id: int,# ID категории, которую хотим получить.
-    db: Session = Depends(get_db)# Подключаемся к базе данных.
+    category_id: int,
+    db: Session = Depends(get_db)
 ):
     return get_category(db,category_id)
- # get_category() — CRUD-функция.
-    # Она достаёт из базы данных категорию по её ID.
+
+
 
 
 
 @router.put("/{category_id}", response_model=CategoryResponse)
 def update_category_route(
-    category_id: int,# ID категории, которую хотим изменить.
-    category: CategoryUpdate,# Новые данные для категории.
+    category_id: int,
+    category: CategoryUpdate,
 
     db: Session = Depends(get_db)
-):# Подключаемся к базе данных
+):
     return update_category(db, category_id, category)
-  # update_category() — CRUD-функция.
-    # Она находит категорию по ID, изменяет её данные
-    # и сохраняет изменения в базе данных.
+
+
+
 
 
 
 @router.delete("/{category_id}", response_model=CategoryResponse)
 def remove_category(
-    category_id: int,# ID категории, которую хотим удалить.
-    db: Session = Depends(get_db) # Подключаемся к базе данных.
+    category_id: int,
+    db: Session = Depends(get_db)
 ):
     return delete_category(db, category_id)
- # delete_category() — CRUD-функция.
-    # Она находит категорию по ID, удаляет её из базы данных
-    # и возвращает удалённую категорию.

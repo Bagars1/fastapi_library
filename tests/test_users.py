@@ -25,7 +25,7 @@ def reset_database():
     with test_engine.begin() as connection:
         for table in reversed(Base.metadata.sorted_tables):
             connection.execute(table.delete())
-    # удаляем данные из всех таблиц перед каждым тестом
+
 
 
 def override_get_db():
@@ -90,4 +90,3 @@ def test_register_duplicate_user():
     assert response.json() == {
         "detail": "User with this username or email already exists"
     }
-

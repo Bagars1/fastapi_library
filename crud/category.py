@@ -1,42 +1,42 @@
-from sqlalchemy.orm import Session      # Session - работа с базой данных.
+from sqlalchemy.orm import Session
 from fastapi import HTTPException
 
-from models.category import Category    # Импорт модели Category.
-from schemas.category import CategoryCreate, CategoryUpdate  # Импорт схемы CategoryCreate.
+from models.category import Category
+from schemas.category import CategoryCreate, CategoryUpdate
 
 
 def create_category(
-    db: Session,                        # Подключение к базе данных.
-    category: CategoryCreate            # Данные, которые прислал пользователь.
+    db: Session,
+    category: CategoryCreate
 ):
-    new_category = Category(            # Создаём новый объект модели Category.
-                                       # Пока объект существует только в памяти Python.
-        name=category.name             # name - поле модели Category.
-                                       # Оно объявлено в models/category.py:
-                                       # name = Column(String, nullable=False, unique=True)
-                                       #
-                                       # category.name - значение поля name из схемы CategoryCreate.
-                                       # Пользователь отправил:
-                                       # {
-                                       #     "name": "Fantasy"
-                                       # }
-                                       #
-                                       # Тогда:
-                                       # category.name = "Fantasy"
-                                       #
-                                       # Получится:
-                                       # Category(name="Fantasy")
+    new_category = Category(
+
+        name=category.name
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     )
 
-    db.add(new_category)               # Добавляем объект в сессию SQLAlchemy.
-                                       # В базе данных записи ещё нет.
+    db.add(new_category)
 
-    db.commit()                        # Сохраняем изменения в базе данных.
 
-    db.refresh(new_category)           # Обновляем объект данными из базы данных.
-                                       # После сохранения у него появится id.
+    db.commit()
 
-    return new_category                # Возвращаем созданную категорию.
+    db.refresh(new_category)
+
+
+    return new_category
 
 
 
