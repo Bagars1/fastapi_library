@@ -9,8 +9,6 @@ from routers.favorite import router as favorite_router
 
 from routers.review import router as review_router
 
-
-
 app = FastAPI()
 
 

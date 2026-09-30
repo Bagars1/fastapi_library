@@ -6,20 +6,17 @@ from models.book import Book
 from schemas.book import BookCreate, BookPatch, BookUpdate
 
 
-
 def create_book(db: Session, book: BookCreate):
-
 
     get_category(db, book.category_id)
 
     new_book = Book(
-
         title=book.title,
         author=book.author,
         pages=book.pages,
         price=book.price,
         year=book.year,
-        category_id=book.category_id
+        category_id=book.category_id,
     )
 
     db.add(new_book)
@@ -29,13 +26,12 @@ def create_book(db: Session, book: BookCreate):
     return new_book
 
 
-
 def get_books(
     db: Session,
     sort_by: str = "title",
     order: str = "asc",
     skip: int = 0,
-    limit: int = 10
+    limit: int = 10,
 ):
     query = db.query(Book)
 
@@ -62,46 +58,22 @@ def get_books(
     return query.all()
 
 
-def get_book(
-    db: Session,
-    book_id: int
-):
-
-
-
-
-
-
+def get_book(db: Session, book_id: int):
 
     book = db.query(Book).filter(Book.id == book_id).first()
 
-
-
     if book is None:
-        raise HTTPException(
-            status_code=404,
-            detail="Book not found"
-        )
-
-
+        raise HTTPException(status_code=404, detail="Book not found")
 
     return book
 
 
-
-def update_book(
-    db: Session,
-    book_id: int,
-    book: BookUpdate
-):
+def update_book(db: Session, book_id: int, book: BookUpdate):
 
     existing_book = db.query(Book).filter(Book.id == book_id).first()
 
     if existing_book is None:
-        raise HTTPException(
-            status_code=404,
-            detail="Book not found"
-        )
+        raise HTTPException(status_code=404, detail="Book not found")
     get_category(db, book.category_id)
     existing_book.title = book.title
     existing_book.author = book.author
@@ -115,19 +87,11 @@ def update_book(
     return existing_book
 
 
-
-
-def delete_book(
-    db: Session,
-    book_id: int
-):
+def delete_book(db: Session, book_id: int):
     book = db.query(Book).filter(Book.id == book_id).first()
 
     if book is None:
-        raise HTTPException(
-            status_code=404,
-            detail="Book not found"
-        )
+        raise HTTPException(status_code=404, detail="Book not found")
 
     db.delete(book)
     db.commit()
@@ -135,11 +99,7 @@ def delete_book(
     return book
 
 
-def patch_book(
-    db: Session,
-    book_id: int,
-    book: BookPatch
-):
+def patch_book(db: Session, book_id: int, book: BookPatch):
     existing_book = get_book(db, book_id)
 
     if book.title is not None:
@@ -168,24 +128,17 @@ def patch_book(
     return existing_book
 
 
-def search_books(
-    db: Session,
-    title: str | None = None,
-    author: str | None = None
-):
+def search_books(db: Session, title: str | None = None, author: str | None = None):
     query = db.query(Book)
 
     if title:
-        query = query.filter(
-            Book.title.ilike(f"%{title}%")
-        )
+        query = query.filter(Book.title.ilike(f"%{title}%"))
 
     if author:
-        query = query.filter(
-            Book.author.ilike(f"%{author}%")
-        )
+        query = query.filter(Book.author.ilike(f"%{author}%"))
 
     return query.all()
+
 
 def delete_book(db: Session, book_id: int):
     book = db.query(Book).filter(Book.id == book_id).first()

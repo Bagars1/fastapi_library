@@ -9,6 +9,7 @@ class BookCreate(BaseModel):
     year: int | None = Field(default=None, ge=1000, le=2100)
     category_id: int
 
+
 class BookUpdate(BaseModel):
     title: str
     author: str
@@ -16,6 +17,7 @@ class BookUpdate(BaseModel):
     price: float
     year: int | None = None
     category_id: int
+
 
 class BookPatch(BaseModel):
     title: str | None = None
@@ -25,17 +27,9 @@ class BookPatch(BaseModel):
     year: int | None = None
     category_id: int | None = None
 
+
 class BookResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
-
-
-
-
-
-
-
-
-
 
     id: int
     title: str

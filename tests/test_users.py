@@ -10,7 +10,6 @@ from fastapi.testclient import TestClient
 from main import app
 from database.database import Base, get_db
 
-
 load_dotenv()
 
 TEST_DATABASE_URL = os.getenv("TEST_DATABASE_URL")
@@ -25,7 +24,6 @@ def reset_database():
     with test_engine.begin() as connection:
         for table in reversed(Base.metadata.sorted_tables):
             connection.execute(table.delete())
-
 
 
 def override_get_db():
@@ -54,8 +52,8 @@ def test_register_user():
         json={
             "username": "pytestuser",
             "email": "pytest@example.com",
-            "password": "Test12345"
-        }
+            "password": "Test12345",
+        },
     )
 
     assert response.status_code == 200
@@ -73,8 +71,8 @@ def test_register_duplicate_user():
         json={
             "username": "pytestuser",
             "email": "pytest@example.com",
-            "password": "Test12345"
-        }
+            "password": "Test12345",
+        },
     )
 
     response = client.post(
@@ -82,8 +80,8 @@ def test_register_duplicate_user():
         json={
             "username": "pytestuser",
             "email": "pytest@example.com",
-            "password": "Test12345"
-        }
+            "password": "Test12345",
+        },
     )
 
     assert response.status_code == 409

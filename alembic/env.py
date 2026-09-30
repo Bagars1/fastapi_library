@@ -13,7 +13,6 @@ from models.user import User
 from models.favorite import Favorite
 from models.review import Review
 
-
 config = context.config
 
 if config.config_file_name is not None:
@@ -62,4 +61,3 @@ if context.is_offline_mode():
     run_migrations_offline()
 else:
     run_migrations_online()
-
