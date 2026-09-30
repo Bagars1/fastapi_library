@@ -1,12 +1,5 @@
 from sqlalchemy.orm import Session
-
-
-
-
 from models.review import Review
-
-
-
 
 def create_review(
     db: Session,
@@ -16,16 +9,6 @@ def create_review(
     comment: str
 ):
 
-
-
-
-
-
-
-
-
-
-
     review = Review(
         user_id=user_id,
         book_id=book_id,
@@ -34,29 +17,7 @@ def create_review(
     )
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     db.add(review)
-
-
     db.commit()
-
-
     db.refresh(review)
-
-
-
     return review
